@@ -1,13 +1,26 @@
 pipeline {
-    agent any
+
+    agent {
+        node {
+            label 'master'
+        }
+    }
+
+    options {
+        buildDiscarder logRotator( 
+                    daysToKeepStr: '16', 
+                    numToKeepStr: '10'
+            )
+    }
+
     stages {
-        stage('1 - Build') {
+        
+        stage('Cleanup Workspace') {
             steps {
-                echo "Build"
-                sh '''
-                date
-                echo $BUILD_ID
-                '''
+                cleanWs()
+                sh """
+                echo "Cleaned Up Workspace For Project"
+                """
             }
         }
 
@@ -21,31 +34,41 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage(' Unit Testing') {
             steps {
-                echo "Test"
+                sh """
+                echo "Running Unit Tests"
+                """
             }
         }
-        
-        stage('Deploy') {
+
+        stage('Code Analysis') {
             steps {
-                echo "Deploy"
+                sh """
+                echo "Running Code Analysis"
+                """
             }
         }
-        
-        stage('Stage only for test branch') {
+
+        stage('Build Deploy Code') {
             when {
-                expression { return env.BRANCH_NAME == 'test' }
+                branch 'develop'
             }
             steps {
-                echo "This steps only for test stage!"
-                echo "Result: SUCCESS"
+                sh """
+                echo "Building Artifact"
+                """
+
+                sh """
+                echo "Deploying Code"
+                """
             }
-        } 
+        }
         post {
             always {
                 emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
             }
         }
-    }
+
+    }   
 }
