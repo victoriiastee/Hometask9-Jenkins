@@ -63,7 +63,7 @@ pipeline {
     }
     post {
         always {
-            mail to: victoriiastee@gmail.com, subject: 'The Pipeline succeed C:'
+            emailext body: 'A Test email', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Success'
         }
     }
 }
