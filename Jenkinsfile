@@ -65,6 +65,5 @@ pipeline {
         always {
             mail to: victoriiastee@gmail.com subject: 'The Pipeline succeed C:'
         }
-
     }
 }
