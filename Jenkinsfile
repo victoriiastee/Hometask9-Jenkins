@@ -64,7 +64,7 @@ pipeline {
     post {
         always {
             emailext (
-                to: victoriiastee@gmail.com,
+                to: 'victoriiastee@gmail.com',
                 subject: "SUCCESS",
                 body: "SUCCESS!"
             )
