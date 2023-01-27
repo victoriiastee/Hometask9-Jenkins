@@ -64,7 +64,7 @@ pipeline {
     post {
         always {
             sh  ("""
-                curl -s -X POST https://api.telegram.org/bot${'5917052334:AAHyYqW-5kVOMiH30S_xfQwxNUgNp3ETdWw'}/sendMessage -d chat_id=${'-628791181'} -d parse_mode=markdown -d text='*Full project name*: ${env.JOB_NAME} \n*Branch*: [$GIT_BRANCH]($GIT_URL) \n*Build* : [OK](${BUILD_URL}consoleFull)'
+                curl -s -X POST https://api.telegram.org/bot${'5917052334:AAHyYqW-5kVOMiH30S_xfQwxNUgNp3ETdWw'}/sendMessage -d chat_id=${'533840240'} -d parse_mode=markdown -d text='*Full project name*: ${env.JOB_NAME} \n*Branch*: [$GIT_BRANCH]($GIT_URL) \n*Build* : [OK](${BUILD_URL}consoleFull)'
             """)
         }
     }
